@@ -123,10 +123,8 @@ function searchLocation() {
       return;
     }
 
-    if(place.place_id){
-      var placeIdvar = place.place_id;
-      return placeIdvar;
-    }
+    var placeIdvar = place.place_id;
+    
     geocoder.geocode({
       'placeId': place.place_id
     }, function (results, status) {
