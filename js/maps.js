@@ -23,30 +23,15 @@ function addMarkerInfo(placeLat, placeLon) {
       },
     ];
     var count = 0;
-if((placeLat - 0.00002) < markersOnMap[0].LatLng[0].lat < (placeLat + 0.00002) && (placeLon - 0.00002) < markersOnMap[0].LatLng[0].lng < (placeLon + 0.00001)){
+if((placeLat - 1.1) < markersOnMap[0].LatLng[0].lat < (placeLat + 1.1) && (placeLon - 1.1) < markersOnMap[0].LatLng[0].lng < (placeLon + 1.1)){
 count += 1;
-    var contentString =
-      '<div id="content"><h1>' +
-      markersOnMap[0].placeName +
-      "</h1><p>Location Info.</p></div>";
+ return count;}
     const marker = new google.maps.Marker({
       position: markersOnMap[0].LatLng[0],
       map: map,
     });
-
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-      maxWidth: 200,
-    });
-
-    marker.addListener("click", function () {
-      closeOtherInfo();
-      infowindow.open(marker.get("map"), marker);
-      InforObj[0] = infowindow;
-    });
   }
- }
- return count;
+
 }
 
 function closeOtherInfo() {
