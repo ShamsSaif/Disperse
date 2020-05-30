@@ -10,18 +10,21 @@ window.onload = function () {
   initMap1();
 };
 
-function addMarkerInfo() {
-  for (var i = 0; i < 50; i++) {
+function addMarkerInfo(placeLat, placeLon) {
+  for (var i = 0; i < 200; i++) {
     var markersOnMap = [
       {
         LatLng: [
           {
-            lat: getRandomLat(-37.840157, -37.9312, 8),
-            lng: getRandomLon(145.074128, 144.964193, 8),
+            lat: getRandomLat(-37.566351, -38.220920, 8),
+            lng: getRandomLon(144.561673, 145.292741, 8),
           },
         ],
       },
     ];
+    var count = 0;
+if((placeLat - 0.00002) < markersOnMap[0].LatLng[0].lat < (placeLat + 0.00002) && (placeLon - 0.00002) < markersOnMap[0].LatLng[0].lng < (placeLon + 0.00001)){
+count += 1;
     var contentString =
       '<div id="content"><h1>' +
       markersOnMap[0].placeName +
@@ -42,6 +45,8 @@ function addMarkerInfo() {
       InforObj[0] = infowindow;
     });
   }
+ }
+ return count;
 }
 
 function closeOtherInfo() {
@@ -138,15 +143,22 @@ function initMap1() {
         placeId: place.place_id,
         location: results[0].geometry.location
       });
-
+      var request = {
+        placeId: place.place_id,
+        fields: ['name', 'formatted_address', 'place_id', 'geometry']
+      };
+      var service = new google.maps.places.PlacesService(map);
+      service.getDetails(request, function(place, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
       marker.setVisible(true);
-
-      infowindowContent.children['place-name'].textContent = place.name;
-      infowindowContent.children['place-id'].textContent = place.place_id;
+			var	count = addMarkerInfo(place.geometry.location.lat(),place.geometry.location.lng());
+      infowindowContent.children['place-name'].textContent = results[0].name;
       infowindowContent.children['place-address'].textContent =
         results[0].formatted_address;
+        infowindowContent.children['total-people'].textContent = count;
 
       infowindow.open(map, marker);
+    }});
     });
   });
 }
@@ -156,6 +168,5 @@ function initMap() {
     zoom: 12,
     center: centerCords,
   });
-  addMarkerInfo();
+  
 }
-

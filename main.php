@@ -90,8 +90,7 @@
     <script src="js/maps.js"></script>
 </body>
 <div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsNGvQ5kVB5VBPge6uddHw5oh7mWuH3oI&libraries=places"> </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrs3ok08Q8pJFhWL0R5bZ-91Q2uJUJt1Y&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPLsubz9rM6MI4D8rl97QwynnTB6AXcB4&libraries=places&callback=initMap" async defer></script>
 
 
 </html>

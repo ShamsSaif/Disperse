@@ -4,7 +4,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Google\Cloud\Datastore\DatastoreClient;
 
-$projectId = 'cloud-computing-a1-270211';
+$projectId = 'cloud-project-270906';
 $datastore = new DatastoreClient([
     'projectId' => $projectId
 ]);
