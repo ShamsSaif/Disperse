@@ -84,13 +84,13 @@
     <div id="map"></div>
     <div id="infowindow-content">
       <span id="place-name" class="title"></span><br>
-      <strong>Place ID</strong>: <span id="place-id"></span><br>
       <span id="place-address"></span>
+      <span id="total-people"></span>
     </div>
     <script src="js/maps.js"></script>
 </body>
 <div id="map"></div>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPLsubz9rM6MI4D8rl97QwynnTB6AXcB4&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCGCul42xH-_z6j0mbdsleK8IzvU5YXwhU&libraries=places&callback=initMap" async defer></script>
 
 
 </html>
