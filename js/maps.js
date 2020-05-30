@@ -7,6 +7,7 @@ var centerCords = {
 
 window.onload = function () {
   initMap();
+  initMap1();
 };
 
 function addMarkerInfo() {
@@ -57,9 +58,8 @@ function getRandomLat(from, to, fixed) {
   return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
 }
 
-//get current locaiton of the user
-function currLocation() {
-
+function initMap1() {
+//get current location 
   var infoWindow = new google.maps.InfoWindow;
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -86,11 +86,8 @@ function currLocation() {
       'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(map);
   }
-}
 
- // Search Location from search bar
-function searchLocation() {
- 
+  // Search location
   var input = document.getElementById('pac-input');
 
   var autocomplete = new google.maps.places.Autocomplete(input);
@@ -123,7 +120,7 @@ function searchLocation() {
       return;
     }
 
-    var placeIdvar = place.place_id;
+    var getPlacdId = place.place_id;
     
     geocoder.geocode({
       'placeId': place.place_id
@@ -160,7 +157,5 @@ function initMap() {
     center: centerCords,
   });
   addMarkerInfo();
-  currLocation();
-  searchLocation();
-  
 }
+
