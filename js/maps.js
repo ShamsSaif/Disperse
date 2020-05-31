@@ -5,33 +5,29 @@ var centerCords = {
   lng: 144.962379,
 };
 
-window.onload = function () {
+window.onload = function() {
   initMap();
   initMap1();
 };
 
 function addMarkerInfo(placeLat, placeLon) {
-  for (var i = 0; i < 200; i++) {
-    var markersOnMap = [
-      {
-        LatLng: [
-          {
-            lat: getRandomLat(-37.566351, -38.220920, 8),
-            lng: getRandomLon(144.561673, 145.292741, 8),
-          },
-        ],
-      },
-    ];
-    var count = 0;
-if((placeLat - 1.1) < markersOnMap[0].LatLng[0].lat < (placeLat + 1.1) && (placeLon - 1.1) < markersOnMap[0].LatLng[0].lng < (placeLon + 1.1)){
-count += 1;
- return count;}
-    const marker = new google.maps.Marker({
-      position: markersOnMap[0].LatLng[0],
-      map: map,
-    });
+  var count = 0;
+  for (var i = 0; i < 1000000; i++) {
+    var markersOnMap = [{
+      LatLng: [{
+        lat: getRandomLat(-37.566351, -38.220920, 7),
+        lng: getRandomLon(144.561673, 145.292741, 7),
+      }, ],
+    }, ];
+    if ((placeLat + 0.004) > markersOnMap[0].LatLng[0].lat && (placeLat - 0.004)< markersOnMap[0].LatLng[0].lat && (placeLon + 0.004) > markersOnMap[0].LatLng[0].lng && (placeLon - 0.004) < markersOnMap[0].LatLng[0].lng) {
+      count += 1;
+      const marker = new google.maps.Marker({
+        position: markersOnMap[0].LatLng[0],
+        map: map,
+      });
+    }
   }
-
+  return count ;
 }
 
 function closeOtherInfo() {
@@ -41,18 +37,20 @@ function closeOtherInfo() {
     InforObj.length = 0;
   }
 }
+
 function getRandomLon(from, to, fixed) {
   return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
 }
+
 function getRandomLat(from, to, fixed) {
   return (Math.random() * (to - from) + from).toFixed(fixed) * 1;
 }
 
 function initMap1() {
-//get current location 
+  //get current location 
   var infoWindow = new google.maps.InfoWindow;
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function (position) {
+    navigator.geolocation.getCurrentPosition(function(position) {
       var pos = {
         lat: position.coords.latitude,
         lng: position.coords.longitude
@@ -62,7 +60,7 @@ function initMap1() {
       infoWindow.setContent('Location found.');
       infoWindow.open(map);
       map.setCenter(pos);
-    }, function () {
+    }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
     });
   } else {
@@ -98,11 +96,11 @@ function initMap1() {
   var marker = new google.maps.Marker({
     map: map
   });
-  marker.addListener('click', function () {
+  marker.addListener('click', function() {
     infowindow.open(map, marker);
   });
 
-  autocomplete.addListener('place_changed', function () {
+  autocomplete.addListener('place_changed', function() {
     infowindow.close();
     var place = autocomplete.getPlace();
 
@@ -111,10 +109,10 @@ function initMap1() {
     }
 
     var getPlacdId = place.place_id;
-    
+
     geocoder.geocode({
       'placeId': place.place_id
-    }, function (results, status) {
+    }, function(results, status) {
       if (status !== 'OK') {
         window.alert('Geocoder failed due to: ' + status);
         return;
@@ -135,15 +133,19 @@ function initMap1() {
       var service = new google.maps.places.PlacesService(map);
       service.getDetails(request, function(place, status) {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-      marker.setVisible(true);
-			var	count = addMarkerInfo(place.geometry.location.lat(),place.geometry.location.lng());
-      infowindowContent.children['place-name'].textContent = results[0].name;
-      infowindowContent.children['place-address'].textContent =
-        results[0].formatted_address;
-        infowindowContent.children['total-people'].textContent = count;
+          marker.setVisible(true);
+          var lat = parseFloat(place.geometry.location.lat());
+          var lon = parseFloat(place.geometry.location.lng());
+          var count = addMarkerInfo(lat, lon);
 
-      infowindow.open(map, marker);
-    }});
+          infowindowContent.children['place-name'].textContent = results[0].name;
+          infowindowContent.children['place-address'].textContent =
+            results[0].formatted_address;
+          infowindowContent.children['total-people'].textContent = count;
+
+          infowindow.open(map, marker);
+        }
+      });
     });
   });
 }
@@ -153,5 +155,5 @@ function initMap() {
     zoom: 12,
     center: centerCords,
   });
-  
+
 }
